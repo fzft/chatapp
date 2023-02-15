@@ -32,7 +32,7 @@ export const ChatAppProvider = ({children}) => {
             const userName = await contract.getUsername(account);
             setUsername(userName);
             // get friend list
-            const friendList = await contract.getMyFriendList(account);
+            const friendList = await contract.getMyFriendList();
             setFriendLists(friendList);
 
             // get user list
@@ -40,23 +40,25 @@ export const ChatAppProvider = ({children}) => {
             setUserLists(userList);
             
         } catch (error) {
+            console.log(error)
             setError("Please install and connect your wallet")
         }
     }
 
     // create account
-    const createAccount = async(username, accountAddress) => {
+    const createAccount = async({name, accountAddress}) => {
         try {
-            if (!username || !accountAddress) {
-                return setError("Please enter your username or account address");
-            }
+            // if (!username || !accountAddress) {
+            //     return setError("Please enter your username or account address");
+            // }
             const contract = await connectingWithContract();
-            const createAccount = await contract.createAccount(username);
+            const createAccount = await contract.createAccount(name);
             setLoading(true);
             await createAccount.wait();
             setLoading(false);
 
         } catch (error) {
+            console.log(error)
             setError("Error while creating your account, please try again")
         }
     }
@@ -88,25 +90,27 @@ export const ChatAppProvider = ({children}) => {
         try {
             const contract = await connectingWithContract();
             const message = await contract.readMessage(friendAddress);
-            setFriendMsg(message);
+            console.log(message)
+            setFriendMsg(message)
         } catch (error) {
             setError("currently you have no message")
         }
     }
 
     // send message to your friend
-    const sendMessage = async({friendAddress, message}) => {
+    const sendMessage = async({message, address}) => {
         try {
-            if (!friendAddress || !message) {
-                return setError("Please enter your friend address");
-            }
+            // if (!friendAddress || !message) {
+            //     return setError("Please enter your friend address");
+            // }
             const contract = await connectingWithContract();
-            const sendMessage = await contract.sendMessage(friendAddress, message);
+            const sendMessage = await contract.sendMessage(address, message);
             setLoading(true);
             await sendMessage.wait();
             setLoading(false);
             window.location.reload();
         } catch (error) {
+            console.log(error)
             setError("Error while sending your message, please try again")
         } 
     }
@@ -123,7 +127,7 @@ export const ChatAppProvider = ({children}) => {
         }
     }
 
-
+    
     return (
         <ChatAppContext.Provider value={{readMessage, createAccount, addFriend, sendMessage, readUser,conectWallet, CheckIfWalletConnected,
         account, username, friendLists, friendMsg, loading, userLists, error, currentUsername, currentUserAddress

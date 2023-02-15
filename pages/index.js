@@ -1,10 +1,13 @@
-import React, { useContext } from 'react'
-import { ChatAppContext } from '@/Context/ChatAppContext'
+import React, { useContext } from 'react';
+
+import { Filter, Friend } from '@/Components';
 
 export const ChatApp = () => {
-  const {} = useContext(ChatAppContext)
   return (
-    <div></div>
+    <div>
+      <Filter/>
+      <Friend/>
+    </div>
   )
 }
 

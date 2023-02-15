@@ -33,20 +33,20 @@ export default function Model({
             <small>{smallInfo}</small>
 
             {
-              loading == true? ()
-            }
-
-            <div className={Style.Model_box_right_name}>
+              loading == true? (
+                <Loader/>
+              ): (
+<div className={Style.Model_box_right_name}>
               <div className={Style.Model_box_right_name_info}>
                 <Image src={images.username} alt="user" width={30} height={30}></Image>
                 <input type="text" placeholder="Enter your name" value={name} onChange={(e)=>setName(e.target.value)}></input>
               </div>
               <div className={Style.Model_box_right_name_info}>
                 <Image src={images.account} alt="account" width={30} height={30}></Image>
-                <input type="text" placeholder={address||"Enter address..."}value={name} onChange={(e)=>setAccountAddress(e.target.value)}></input>
+                <input type="text" placeholder={address||"Enter address..."} value={accountAddress} onChange={(e)=>setAccountAddress(e.target.value)}></input>
               </div>
               <div className={Style.Model_box_right_name_btn}>
-              <button onClick={() => functionName({ name, accountAddress })}>
+              <button onClick={() => functionName({name, accountAddress} )}>
                   {""}
                   <Image src={images.send} alt="send" width={30} height={30} />
                   {""}
@@ -60,6 +60,7 @@ export default function Model({
                 </button>
               </div>
             </div>
+              )}
           </div>
         </div>
       </div>
